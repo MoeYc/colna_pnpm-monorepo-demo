@@ -1,0 +1,8 @@
+.welcomeContainer {
+  margin-top: 50px;
+  :global {
+    .ant-result-icon {
+      margin-bottom: 0;
+    }
+  }
+}

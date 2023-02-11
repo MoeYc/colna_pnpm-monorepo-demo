@@ -1,0 +1,56 @@
+# dependencies
+node_modules/
+
+# testing
+/coverage
+
+# production
+
+dist/
+**/lib
+**/.mfsu/
+**/dist/
+build
+
+# misc
+.DS_Store
+*.local*
+*.pyc
+.backups
+
+# log
+*.log*
+
+# react-docgen
+extracted/
+
+# editor
+.magicindex.json
+.idea
+*.iml
+.vscode
+.history
+*.swp
+
+apps/statics/public/
+orign/
+
+bundles/
+
+.cache
+.eslintrc_lint_staged
+
+yalc.lock
+.yalc
+
+
+dump.rdb
+
+upgrade
+
+.dockerignore
+.scannerwork/
+Dockerfile
+diff-only-line-number.sh
+jenkins_build.sh
+Jenkinsfile
