@@ -7,7 +7,19 @@ const esbuild = require("esbuild");
 const mfsu = new MFSU({
   implementor: webpack,
   buildDepWithESBuild: true,
+  depBuildConfig: {
+    loader: {
+      '.scss': 'file',
+    },
+  }
 });
+
+const cssLoader = {
+  loader: "css-loader",
+  options: {
+    modules: true,
+  }
+}
 
 const config = {
   entry: path.join(__dirname, "./src"),
@@ -45,22 +57,18 @@ const config = {
         },
       },
       {
-        test: [/\.less$/i, /\.css$/i],
-        exclude: /node_modules/,
+        test: /\.css$/i,
         use: [
           "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                //所有 less和 scss文件都支持模块引入
-                auto: (resourcePath) =>
-                  resourcePath.endsWith(".less") ||
-                  resourcePath.endsWith(".css"),
-                localIdentName: "[local]_[hash:base64:5]",
-              },
-            },
-          },
+          cssLoader,
+          "postcss-loader",
+        ]
+      },
+      {
+        test: /\.less$/i,
+        use: [
+          "style-loader",
+          cssLoader,
           "postcss-loader",
           {
             loader: "less-loader",
@@ -75,19 +83,9 @@ const config = {
       },
       {
         test: /\.s[ac]ss$/i,
-        exclude: /node_modules/,
         use: [
           "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                //所有 less和 scss文件都支持模块引入
-                auto: (resourcePath) => resourcePath.endsWith(".scss"),
-                localIdentName: "[local]_[hash:base64:5]",
-              },
-            },
-          },
+          cssLoader,
           "postcss-loader",
           "sass-loader",
         ],
@@ -112,34 +110,9 @@ const config = {
   },
 };
 
-const depConfig = {
-  output: {},
-  resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.[jt]sx?$/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
-          },
-        },
-      },
-    ],
-  },
-  plugins: [],
-};
-
 // [mfsu] 4. inject mfsu webpack config
 const getConfig = async () => {
-  await mfsu.setWebpackConfig({ config, depConfig });
+  await mfsu.setWebpackConfig({ config, depConfig: {} });
   return config;
 };
 

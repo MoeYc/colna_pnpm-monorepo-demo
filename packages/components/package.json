@@ -2,7 +2,8 @@
   "name": "@packages/components",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "dist/esm/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
     "dev": "father dev",
     "build": "father build",
@@ -18,8 +19,6 @@
   },
   "devDependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.57.1",
-    "sass-loader": "^13.2.0"
+    "react-dom": "^18.2.0"
   }
 }
